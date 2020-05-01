@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from web_scraper_functions_4_zida import *
 import pandas as pd
 
@@ -18,13 +17,14 @@ def main():
     page_numbers = [element.text for element in pagination if element.text.isdigit()][-1]
     print([page_numbers])
     last_page_number = int(page_numbers[-1])
-    first_page_number = int(page_numbers[0])-1
+    first_page_number = int(page_numbers[0]) - 1
 
     print('Last page number:', last_page_number)
     print('First page number:', first_page_number)
+
     # Extract URLs from first page
     url_list = extract_urls_from_search_criteria(chrome_browser)
-    print('First page', url_list)
+
     # Extract URLs from remaining pages
     for i in range(first_page_number + 1, last_page_number + 1):
         print(i)
@@ -33,10 +33,12 @@ def main():
         b = extract_urls_from_search_criteria(chrome_browser)
         url_list = url_list + b
     url_set = set(url_list)  # cleaning up eventual duplicates
+
     print('\nTotal extracted unique:', len(url_set), 'urls!')
 
-    sg.Popup('URL extraction finished! Starting data extraction from URLS...', title='Notification', auto_close=True,
-             auto_close_duration=5)
+    sg.Popup(
+        'URL extraction finished!' + '\nTotal extracted unique :' + str(len(url_set)) + ' urls!' +
+        '\nStarting data extraction from URLS...', title='Notification', auto_close=True, auto_close_duration=5)
 
     #  Commented code part should be used if progress bar is implemented
 
