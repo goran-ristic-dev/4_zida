@@ -261,3 +261,4 @@ def send_email(attachment_filename, message_body_as_html='', subject=None,
     server.sendmail(sender_email_address, receiver_email_address, text)  # Send the email
     server.quit()  # Logout of the email server
     return None
+
