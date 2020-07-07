@@ -119,7 +119,7 @@ def configure_browser_and_run():
     for option in option_list:
         options.add_argument(option)
 
-    default_browser = webdriver.Chrome(executable_path=r'C:\Users\g.ristic\PycharmProjects\Cityexpert\chromedriver.exe',
+    default_browser = webdriver.Chrome(executable_path=r'C:\Users\g.ristic\PycharmProjects\4_zida\chromedriver.exe',
                                        options=options)
     return default_browser, url, exc_export, htm_export, export_folder, eml_export
 
