@@ -42,7 +42,7 @@ class DataProcessing:
 
         # Export data
         if folder_name:
-            folder_name = folder_name + '/'
+            folder_name += '/'
 
         if export_format == 'xlsx':
             data_frame.to_excel(folder_name + datetime.now().strftime('%d_%m_%Y_%H_%M_%S') + export_title + ' scrapped '
@@ -57,4 +57,4 @@ class DataProcessing:
             data_frame.to_csv(folder_name + datetime.now().strftime('%d_%m_%Y_%H_%M_%S') + export_title + ' scrapped '
                                                                                                           'data.csv')
         else:
-            raise UnsupportedFileFormat('Unsupported file format!')
+            raise UnsupportedFileFormat('File format is not supported')

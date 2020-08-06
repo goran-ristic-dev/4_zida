@@ -135,6 +135,7 @@ def get_url_from_element(web_element, browser):
         get_url_from_element(web_element, browser)
 
 
+
 def extract_urls_from_search_criteria(browser) -> list:
     """
     Function access to opened page returns list of advertisements and returns list of URL link

@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from tqdm import tqdm
 
 
 class AdvertisementsListsPage:
@@ -43,8 +44,9 @@ class AdvertisementsListsPage:
         start_page, stop_page = self.get_number_of_pages()
         list_of_urls = self.get_urls_from_page()
         print('\n...looping trough advertisement pages...')
-        for i in range(start_page, stop_page):
-            print('Extracting urls from page:', str(i + 1), '!')
+
+        for i in tqdm(range(start_page, stop_page)):
+            # print('Extracting urls from page:', str(i + 1))
             self.browser.get(self.url + '&strana=' + str(i + 1))
             list_of_urls += self.get_urls_from_page()
         return list_of_urls

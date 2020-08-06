@@ -1,17 +1,12 @@
+import os
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from GuiCollection import GuiCollection
 from ListOfAdvertisementsPage import AdvertisementsListsPage
 from DetailsOfAdvertisementPage import AdvertisementDetails
 from ExportData import DataProcessing, UnsupportedFileFormat
-
-
-def teardownclass(browser: object) -> None:
-    """
-    :param browser:
-    """
-    browser.close()
-    browser.quit()
+from tqdm import tqdm
 
 
 class RunScraper:
@@ -30,12 +25,22 @@ class RunScraper:
         browser_options = Options()
         for option in browser_configuration_list:
             browser_options.add_argument(option)
-        browser = webdriver.Chrome(executable_path=self.browser_path, options=browser_options)
-        return browser
+        return webdriver.Chrome(
+            executable_path=self.browser_path, options=browser_options
+        )
+
+    @classmethod
+    def teardownclass(cls, browser: object) -> None:
+        """
+        :param browser:
+        """
+        browser.close()
+        browser.quit()
 
 
 def main():
     # Browser configuration
+    global extension
     web_scraper_gui_options = GuiCollection.advanced_web_scraper_gui(gui_title='4 zida Web scraper')
     option_list = []
     if web_scraper_gui_options.get(1):
@@ -51,7 +56,7 @@ def main():
     #  Define url for scraping. If no url is entered default url address is used.
     if web_scraper_gui_options.get(0):
         scraper.default_url = web_scraper_gui_options.get(0)
-        
+
     # Run web scraper
     browser = scraper.configure_and_start_browser(option_list)
     list_of_advertisements = AdvertisementsListsPage(browser, scraper.default_url)
@@ -60,12 +65,15 @@ def main():
                                                                                         'from URLS... '
     GuiCollection.success_notification(message=message)
     details_advertisement_page = AdvertisementDetails(browser)
-    data_list = [details_advertisement_page.scrape_advertisement_data(url) for url in extracted_urls]
+    print('...extracting data from advertisements...')
+    data_list = []
+    for url in tqdm(extracted_urls):
+        data_list.append(details_advertisement_page.scrape_advertisement_data(url))
 
     # File Export configuration
     excel_export = web_scraper_gui_options.get(5)
     html_export = web_scraper_gui_options.get(6)
-    export_folder = web_scraper_gui_options.get(7)
+    export_folder = web_scraper_gui_options.get(7) if web_scraper_gui_options.get(7) != '' else os.getcwd()
     send_email = web_scraper_gui_options.get(8)
 
     if excel_export:
@@ -79,7 +87,7 @@ def main():
                                 export_title=' 4 zida')
     GuiCollection.success_notification(message='Data successfully exported!')
 
-    teardownclass(browser)
+    scraper.teardownclass(browser)
 
 
 if __name__ == '__main__':

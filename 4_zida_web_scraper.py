@@ -14,6 +14,7 @@ def main():
     # remove_gdpr_banner(chrome_browser)
     chrome_browser.implicitly_wait(30)
 
+
     # Get last page number
     pagination = chrome_browser.find_elements(By.CSS_SELECTOR, 'ul.pagination_css>li.page-item.ng-star-inserted')
     page_numbers = [element.text for element in pagination if element.text.isdigit()][-1]
