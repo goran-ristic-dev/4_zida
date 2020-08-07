@@ -1,18 +1,19 @@
 import os
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from GuiCollection import GuiCollection
 from ListOfAdvertisementsPage import AdvertisementsListsPage
 from DetailsOfAdvertisementPage import AdvertisementDetails
-from ExportData import DataProcessing, UnsupportedFileFormat
+from ExportData import DataProcessing
 from tqdm import tqdm
 
 
 class RunScraper:
 
     def __init__(self):
-        self.default_url = 'https://www.4zida.rs/prodaja-stanova/novi-beograd-beograd?jeftinije_od=140000'
+        self.default_url = 'https://www.4zida.rs/prodaja-stanova/novi-beograd-beograd?jeftinije_od=140000&struktura' \
+                           '=dvoiposoban&struktura=trosoban&struktura=troiposoban&struktura=cetvorosoban&struktura' \
+                           '=cetvoroiposoban '
         self.browser_path = 'C:/Users/g.ristic/PycharmProjects/4_zida/chromedriver.exe'
 
     def configure_and_start_browser(self, browser_options: list):
@@ -40,7 +41,7 @@ class RunScraper:
 
 def main():
     # Browser configuration
-    global extension
+
     web_scraper_gui_options = GuiCollection.advanced_web_scraper_gui(gui_title='4 zida Web scraper')
     option_list = []
     if web_scraper_gui_options.get(1):
@@ -73,12 +74,13 @@ def main():
     # File Export configuration
     excel_export = web_scraper_gui_options.get(5)
     html_export = web_scraper_gui_options.get(6)
-    export_folder = web_scraper_gui_options.get(7) if web_scraper_gui_options.get(7) != '' else os.getcwd()
+    export_folder = os.getcwd() if web_scraper_gui_options.get(7) == '' else web_scraper_gui_options.get(7)
     send_email = web_scraper_gui_options.get(8)
+    extension = ''
 
     if excel_export:
         extension = 'xlsx'
-    if html_export:
+    elif html_export:
         extension = 'html'
 
     # Export scraping results

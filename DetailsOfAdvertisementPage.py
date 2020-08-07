@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 class AdvertisementDetails:
     def __init__(self, browser):
         # self.url = url
@@ -35,9 +36,9 @@ class AdvertisementDetails:
                                 element.text.startswith('/')]
         characteristic_values = [element.text for element in characteristic_value_elements if not
                                  element.text.startswith('sprat')]
-        numerated_characteristic_names = [('1' + str(num) + ' ' + value) for num, value in
-                                          enumerate(characteristic_names)]
-        scraped_additional_data: dict = dict(zip(numerated_characteristic_names, characteristic_values))
+        # numerated_characteristic_names = [('1' + str(num) + ' ' + value) for num, value in
+        #                                  enumerate(characteristic_names)]
+        scraped_additional_data: dict = dict(zip(characteristic_names, characteristic_values))
         # print('Data extracted from page.')
         total_dict: dict = {**scraped_data, **scraped_additional_data}
 

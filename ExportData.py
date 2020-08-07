@@ -39,21 +39,19 @@ class DataProcessing:
 
     @staticmethod
     def export_dataset(data_frame, export_format: str, folder_name: str = '', export_title: str = ''):
-
         # Export data
-        if folder_name:
-            folder_name += '/'
+        folder_name += '/'
 
         if export_format == 'xlsx':
             data_frame.to_excel(folder_name + datetime.now().strftime('%d_%m_%Y_%H_%M_%S') + export_title + ' scrapped '
                                                                                                             'data.xlsx',
                                 engine='xlsxwriter')
 
-        if export_format == 'html':
+        elif export_format == 'html':
             data_frame.to_html(folder_name + datetime.now().strftime('%d_%m_%Y_%H_%M_%S') + export_title + ' scrapped '
                                                                                                            'data.html')
 
-        if export_format == 'csv':
+        elif export_format == 'csv':
             data_frame.to_csv(folder_name + datetime.now().strftime('%d_%m_%Y_%H_%M_%S') + export_title + ' scrapped '
                                                                                                           'data.csv')
         else:
