@@ -34,8 +34,9 @@ class AdvertisementsListsPage:
     def get_urls_from_page(self):
         self.browser.implicitly_wait(30)
         advertisement_url_elements = self.browser.find_elements(By.CSS_SELECTOR, self.advertisement_url_elements_css)
-        url_list = [element.get_attribute('href') for element in advertisement_url_elements]
-        return url_list
+        return [
+            element.get_attribute('href') for element in advertisement_url_elements
+        ]
 
     def extract_urls(self):
         self.browser.implicitly_wait(30)

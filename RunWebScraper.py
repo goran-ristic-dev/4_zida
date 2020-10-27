@@ -67,9 +67,10 @@ def main():
     GuiCollection.success_notification(message=message)
     details_advertisement_page = AdvertisementDetails(browser)
     print('...extracting data from advertisements...')
-    data_list = []
-    for url in tqdm(extracted_urls):
-        data_list.append(details_advertisement_page.scrape_advertisement_data(url))
+    data_list = [
+        details_advertisement_page.scrape_advertisement_data(url)
+        for url in tqdm(extracted_urls)
+    ]
 
     # File Export configuration
     excel_export = web_scraper_gui_options.get(5)

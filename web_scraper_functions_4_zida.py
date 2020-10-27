@@ -108,10 +108,10 @@ def configure_browser_and_run():
     export_folder = configuration.get(7)
     eml_export = configuration.get(8)
 
-    default_url_address = 'https://www.4zida.rs/prodaja-stanova/novi-beograd-beograd?jeftinije_od=140000&struktura' \
-                          '=dvoiposoban&struktura=trosoban&struktura=troiposoban&struktura=cetvorosoban&struktura' \
-                          '=cetvoroiposoban&vece_od=64m2'
     if url == '':
+        default_url_address = 'https://www.4zida.rs/prodaja-stanova/novi-beograd-beograd?jeftinije_od=140000&struktura' \
+                              '=dvoiposoban&struktura=trosoban&struktura=troiposoban&struktura=cetvorosoban&struktura' \
+                              '=cetvoroiposoban&vece_od=64m2'
         url = default_url_address
 
     # headless browser setup and initialisation
@@ -127,8 +127,7 @@ def configure_browser_and_run():
 def get_url_from_element(web_element, browser):
     try:
         browser.implicitly_wait(30)
-        url = web_element.get_attribute('href')
-        return url
+        return web_element.get_attribute('href')
     except StaleElementReferenceException as stale_exception:
         print(stale_exception)
         browser.refresh()

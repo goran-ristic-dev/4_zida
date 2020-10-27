@@ -24,10 +24,10 @@ class DataProcessing:
         :return: "DataFrame" object
         """
         df = pd.DataFrame()
-        if self.data_type == 'dict':
-            self.data = list(self.data)
-        elif self.data_type == '':
+        if self.data_type == '':
             pass
+        elif self.data_type == 'dict':
+            self.data = list(self.data)
         else:
             raise TypeError('Unsupported data type. Only list of dictionaries or dictionary are supported!')
 
